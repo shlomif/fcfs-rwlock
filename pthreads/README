@@ -1,0 +1,15 @@
+This a First-Come First-Served Readers/Writers Lock Implementation for
+POSIX Threads.
+
+For installation information consult the file "INSTALL".
+
+For information on how to use it consult the man page 
+("man/pthread_rwlock_fcfs.3thr"), its HTML version
+("man/pthread_rwlock_fcfs.html") or the file "test_rwlock.c".
+
+The FCFS RWLock Homepage is:
+
+http://vipe.technion.ac.il/~shlomif/rwlock/
+
+Enjoy!
+

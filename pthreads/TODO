@@ -1,0 +1,7 @@
+Wish List:
+----------
+
+* Port to ZThread, ACE, Win32 API, gthread, Apache's Portable Run-Time,
+Netscape Portable Run-Time, etc. 
+
+* Prepare an RPM SPEC.

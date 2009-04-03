@@ -1,0 +1,97 @@
+From 0.3.4 to 0.3.5:
+--------------------
+
+* Made test_rwlock an uninstalled binary.
+
+From 0.3.3 to 0.3.4:
+--------------------
+
+* Added the RLE Scheme to the distro.
+
+From 0.3.2 to 0.3.3:
+--------------------
+
+* Removed trailing whitespace.
+
+* Now mydebug just prints one line. (the more verbose debugging is #if'd
+out).
+
+* Changed mydebug to my_debug_print.
+
+* Changed the debug-less my_debug_print to { }. (so if (cond) my_debug_print()
+will work OK)
+
+From 0.3.1 to 0.3.2:
+--------------------
+
+* Now Removing queue junk at gain_read_generic.
+
+From 0.3.0 to 0.3.1:
+--------------------
+
+* Added a mydebug directive.
+
+* Printed the state of the queue and the rwlock.
+
+* Added another extract_first_non_disabled_item() at the end of 
+accept_pending_items().
+
+* The RWLock seems to work OK according to the dumps.
+
+From 0.2.0 to 0.3.0:
+--------------------
+
+* Changed the name of queue_poll to queue_peak.
+
+* Added queue_peak.
+
+* Removed a few redundant externs from queue.c
+
+* Changed the RWLock to RLE. Looks good, but I think accept_pending_items()
+need a little rework.
+
+* Re-worked accept_pending_items() - looks good.
+
+
+From 0.0.11 to 0.2.0:
+---------------------
+
+* Added an HTML page.
+
+* Put some meat in README.
+
+* Changed the version number to 0.2.0.
+
+* Added the man_MANs to EXTRA_DIST in man/Makefile.am so they will be
+included in the distribution.
+
+From 0.0.10 to 0.0.11:
+----------------------
+
+* Added an assert for num_readers > 0 in release().
+
+From 0.0.9 to 0.0.10:
+---------------------
+
+* Placed the man page in its own directory ($DIST/man).
+
+* Created man links to it.
+
+* Combined release_read() and release_write() into release().
+
+* Added a "Want Lock" debug message in gain_write()
+
+* Modified the man pages to reflect the release() change.
+
+From 0.0.8 to 0.0.9:
+--------------------
+
+* Added a man page. It is written in Perl POD and was spell checked.
+
+From 0.0.7 to 0.0.8:
+--------------------
+
+* Added some descriptive comments to pthread/rwlock_fcfs.h
+
+
+

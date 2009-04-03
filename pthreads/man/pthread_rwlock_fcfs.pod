@@ -1,0 +1,93 @@
+=pod
+
+=head1 NAME
+
+pthread_rwlock_fcfs_alloc, 
+pthread_rwlock_fcfs_gain_read, pthread_rwlock_gain_write, 
+pthread_rwlock_fcfs_timed_gain_read, pthread_rwlock_fcfs_timed_gain_write,
+pthread_rwlock_fcfs_try_gain_read, pthread_rwlock_fcfs_try_gain_write,
+pthread_rwlock_fcfs_release,
+pthread_rwlock_fcfs_destroy - operations on a first-come first-served 
+readers/writers lock.
+
+
+=head1 SYNOPSIS
+
+B<#include E<lt>pthread/rwlock_fcfs.hE<gt>>
+
+B<pthread_rwlock_fcfs_t> * I<rwlock> = B<pthread_rwlock_fcfs_alloc>();
+
+B<void> B<pthread_rwlock_fcfs_gain_read>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+
+B<void> B<pthread_rwlock_fcfs_gain_write>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+
+B<void> B<pthread_rwlock_fcfs_try_gain_read>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+
+B<void> B<pthread_rwlock_fcfs_try_gain_write>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+
+B<int> B<pthread_rwlock_fcfs_timed_gain_read>(B<pthread_rwlock_fcfs_t> * I<rwlock>, B<const struct timespec> * I<abstime>, B<int> (*I<continue_callback>)(B<void> * context), B<void> * I<context>);
+
+B<int> B<pthread_rwlock_fcfs_timed_gain_write>(B<pthread_rwlock_fcfs_t> * I<rwlock>, B<const struct timespec> * I<abstime>, B<int> (*I<continue_callback>)(B<void> * context), B<void> * I<context>);
+
+B<void> B<pthread_rwlock_fcfs_release>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+
+B<void> B<pthread_rwlock_fcfs_destroy>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+
+=head1 DESCRIPTION
+
+A Readers/Writers Lock (or "rwlock" for short) is a mechanism that allows an 
+arbitrary number of readers, or alternatively one and only one writer to 
+access a resource at a given time. A First-Come First-Served RWLock makes sure
+every pending thread will get its turn eventually.
+
+To create a new rwlock call B<pthread_rwlock_fcfs_alloc>(). From then on, more
+than one thread can use the lock simultaneously.
+
+B<pthread_rwlock_fcfs_gain_read> and B<pthread_rwlock_fcfs_gain_write> can be
+used to gain read or write access for I<rwlock>. They block indefinitely until
+the access is granted.
+
+B<pthread_rwlock_fcfs_try_gain_read> and B<pthread_rwlock_fcfs_try_gain_write>
+attempt to gain a read or write permission and if they do not succeed they 
+exit immediately. They return 0 upon success and non-zero otherwise.
+
+B<pthread_rwlock_fcfs_timed_gain_read> and B<pthread_rwlock_fcfs_timed_gain_write> 
+attempt to gain a permission while initially waiting until I<abstime>. If by 
+that time access is not granted, then I<continue_callback> will be called to 
+find out if the functions should continue waiting.
+
+I<continue_callback> is responsible for setting a new value for I<abstime> and
+should return 1 if it wishes to continue wait for a permission or 0 otherwise. 
+I<callback_context> is the argument which it receives as an argument.
+
+If I<continue_callback> is set to NULL, then it will be ignored, and the 
+function will terminate once the initial wait is over. 
+
+B<pthread_rwlock_fcfs_timed_gain_read> and B<pthread_rwlock_fcfs_timed_gain_write> 
+return 0 upon success and 1 if they failed to gain a read or write permission.
+
+B<pthread_rwlock_fcfs_release> releases a previously granted 
+read or write permission.
+
+B<pthread_rwlock_fcfs_destroy> can be used to destroy a previously allocated
+I<rwlock>.
+
+=head1 ASYNC-SIGNAL SAFETY
+
+These RWLock functions are not async-signal safe, and should not be called
+from a signal handler.
+
+=head1 RETURN VALUE
+
+All condition variable functions return 0 on success and a non-zero error
+code on error.
+
+=head1 AUTHOR
+
+Shlomi Fish E<lt>shlomif@vipe.technion.ac.ilE<gt>.
+
+=head1 EXAMPLE
+
+See the F<test_rwlock.c> file inside the pthreads' FCFS RWLock distribution.
+
+=cut
