@@ -1,3 +1,7 @@
+* Add CMakeLists.txt for the man directory.
+
+* Add a _destroy function.
+
 Wish List:
 ----------
 
@@ -5,3 +9,5 @@ Wish List:
 Netscape Portable Run-Time, etc. 
 
 * Prepare an RPM SPEC.
+
+
