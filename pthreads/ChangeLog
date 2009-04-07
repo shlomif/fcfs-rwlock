@@ -1,3 +1,11 @@
+Release 0.6.0!
+
+------------------------------------------------------------------------
+r3493 | shlomif | 2009-04-07 21:00:13 +0300 (Tue, 07 Apr 2009) | 2 lines
+Changed paths:
+   M /fcfs-rwlock/trunk/pthreads/test_rwlock.c
+
+Got rid of memory leaks in test_rwlock.c.
 
 ------------------------------------------------------------------------
 r3491 | shlomif | 2009-04-07 20:44:34 +0300 (Tue, 07 Apr 2009) | 4 lines
