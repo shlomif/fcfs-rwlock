@@ -309,6 +309,9 @@ int main(int argc, char * argv[])
             pthread_mutex_unlock(&num_active_mutex);
         }
     }
+
+    pthread_rwlock_fcfs_destroy(mylock);
+
     return 0;
 }
 

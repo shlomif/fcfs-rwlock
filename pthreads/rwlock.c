@@ -542,3 +542,24 @@ int pthread_rwlock_fcfs_try_gain_read(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWL
     return ret;
 }
 
+extern void pthread_rwlock_fcfs_destroy(pthread_rwlock_fcfs_t * rwlock)
+{
+#ifdef PTHREAD_RWLOCK_FCFS_DEBUG
+    char id[1] = "";
+#endif
+    /* Make sure no new threads are accepted */
+    rwlock->is_destroyed = 1;
+
+    /* Make sure all running threads are cleared up. */
+    pthread_rwlock_fcfs_gain_write(rwlock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
+
+    pthread_rwlock_fcfs_release(rwlock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
+
+    /* Now - destroy the lock. */
+    pthread_rwlock_fcfs_queue_destroy(rwlock->queue);
+    
+    free(rwlock);
+
+    return;
+}
+
