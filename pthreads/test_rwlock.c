@@ -34,6 +34,8 @@ void * reader_thread(void * void_context)
 
     sprintf(id, "Reader %i", context->index);
 
+    free(void_context);
+
     pthread_mutex_lock(&num_active_mutex);
     num_active_threads++;
     pthread_mutex_unlock(&num_active_mutex);
@@ -117,6 +119,8 @@ void * writer_thread(void * void_context)
     context = (context_t *)void_context;
 
     sprintf(id, "Writer %i", context->index);
+
+    free(void_context);
 
     pthread_mutex_lock(&num_active_mutex);
     num_active_threads++;
@@ -311,6 +315,19 @@ int main(int argc, char * argv[])
     }
 
     pthread_rwlock_fcfs_destroy(mylock);
+
+    for(a=0;a<NUM_READERS;a++)
+    {
+        pthread_join(readers[a], NULL);
+    }
+    for(a=0;a<NUM_WRITERS;a++)
+    {
+        pthread_join(writers[a], NULL);
+    }
+    
+
+    free(readers);
+    free(writers);
 
     return 0;
 }
