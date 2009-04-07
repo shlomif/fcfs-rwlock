@@ -1,3 +1,31 @@
+0.6.0:    (2009-04-07)
+----------------------
+
+New stable release.
+
+------------------------------------------------------------------------
+r3496 | shlomif | 2009-04-07 21:22:03 +0300 (Tue, 07 Apr 2009) | 2 lines
+Changed paths:
+   M /fcfs-rwlock/trunk/pthreads/COPYING
+
+Clarified the license into X11L + CC-Zero.
+
+------------------------------------------------------------------------
+r3495 | shlomif | 2009-04-07 21:03:02 +0300 (Tue, 07 Apr 2009) | 2 lines
+Changed paths:
+   M /fcfs-rwlock/trunk/pthreads/ChangeLog
+   M /fcfs-rwlock/trunk/pthreads/INSTALL
+
+Updated the INSTALL.
+
+------------------------------------------------------------------------
+r3494 | shlomif | 2009-04-07 21:01:37 +0300 (Tue, 07 Apr 2009) | 2 lines
+Changed paths:
+   M /fcfs-rwlock/trunk/pthreads/ChangeLog
+   M /fcfs-rwlock/trunk/pthreads/ver.txt
+
+Bumped the version number and updated the ChangeLog.
+
 ------------------------------------------------------------------------
 r3493 | shlomif | 2009-04-07 21:00:13 +0300 (Tue, 07 Apr 2009) | 2 lines
 Changed paths:
