@@ -1,5 +1,6 @@
 INCLUDE( "${CMAKE_CURRENT_SOURCE_DIR}/Common.cmake" )
 
+SET(DEBUG "" CACHE BOOL "Add debugging information")
 # This is the equivalent to perform a "make dist"/"make distdir" etc.
 SET(CPACK_PACKAGE_NAME "pthread_rwlock_fcfs")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Readers/Writers Lock")
@@ -95,6 +96,10 @@ CHECK_C_COMPILER_FLAG(${CFLAG_TO_CHECK} CFLAG_GCC_ALL_WARNS)
 IF (${CFLAG_GCC_ALL_WARNS})
     ADD_DEFINITIONS(${CFLAG_TO_CHECK})
 ENDIF (${CFLAG_GCC_ALL_WARNS})
+
+IF (${DEBUG})
+    ADD_DEFINITIONS("-DPTHREAD_RWLOCK_FCFS_DEBUG=1")
+ENDIF (${DEBUG})
 
 # So it can find config.h
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
