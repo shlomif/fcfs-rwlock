@@ -12,7 +12,6 @@ pthread_rwlock_fcfs_t * mylock;
 
 struct context_struct
 {
-    int writer;
     int index;
 };
 
@@ -220,7 +219,6 @@ int main(int argc, char * argv[])
     {
         context = malloc(sizeof(*context));
         context->index = a;
-        context->writer = 0;
         check = pthread_create(
             &readers[a],
             NULL,
@@ -239,7 +237,6 @@ int main(int argc, char * argv[])
     {
         context = malloc(sizeof(*context));
         context->index = a;
-        context->writer = 0;
         check = pthread_create(
             &writers[a],
             NULL,
@@ -249,7 +246,7 @@ int main(int argc, char * argv[])
         
         if (check != 0)
         {
-            fprintf(stderr, "Could not create Reader #%i!\n", a);
+            fprintf(stderr, "Could not create Writer #%i!\n", a);
             exit(-1);
         }
     }
