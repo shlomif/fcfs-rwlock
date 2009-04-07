@@ -8,7 +8,15 @@
 
 #include <pthread/rwlock_fcfs.h>
 
+static const pthread_mutex_t initial_mutex_constant = 
+    PTHREAD_MUTEX_INITIALIZER
+    ;
+
 pthread_rwlock_fcfs_t * mylock;
+
+int stop = 0;
+int num_active_threads = 0;
+pthread_mutex_t num_active_mutex;
 
 struct context_struct
 {
@@ -26,7 +34,11 @@ void * reader_thread(void * void_context)
 
     sprintf(id, "Reader %i", context->index);
 
-    while (1)
+    pthread_mutex_lock(&num_active_mutex);
+    num_active_threads++;
+    pthread_mutex_unlock(&num_active_mutex);
+
+    while (!stop)
     {
         int which = rand()%3;
         if (which == 0)
@@ -90,6 +102,10 @@ void * reader_thread(void * void_context)
         }
     }
 
+    pthread_mutex_lock(&num_active_mutex);
+    num_active_threads--;
+    pthread_mutex_unlock(&num_active_mutex);  
+
     return NULL;
 }
 
@@ -102,7 +118,11 @@ void * writer_thread(void * void_context)
 
     sprintf(id, "Writer %i", context->index);
 
-    while (1)
+    pthread_mutex_lock(&num_active_mutex);
+    num_active_threads++;
+    pthread_mutex_unlock(&num_active_mutex);
+
+    while (!stop)
     {
         int which = rand()%3;
         if (which == 0)
@@ -166,9 +186,12 @@ void * writer_thread(void * void_context)
         }
     }
 
+    pthread_mutex_lock(&num_active_mutex);
+    num_active_threads--;
+    pthread_mutex_unlock(&num_active_mutex);  
+
     return NULL;
 }
-
 
 int main(int argc, char * argv[])
 {
@@ -181,6 +204,7 @@ int main(int argc, char * argv[])
     int arg;
     int NUM_READERS = 5;
     int NUM_WRITERS = 2;
+    int timeout = -1;
 
     for(arg=1;arg<argc;arg++)
     {
@@ -200,16 +224,29 @@ int main(int argc, char * argv[])
             if (arg == argc)
             {
                 fprintf(stderr, "--num-writers accepts an argument!\n");
-                exit(-1);                    
+                exit(-1);
             }
             NUM_WRITERS = atoi(argv[arg]);
+        }
+        else if (!strcmp(argv[arg], "--timeout"))
+        {
+            arg++;
+            if (arg == argc)
+            {
+                fprintf(stderr, "--num-writers accepts an argument!\n");
+                exit(-1);
+            }
+            timeout = atoi(argv[arg]);
         }
         else
         {
             fprintf(stderr, "Unknown option - \"%s\"!\n", argv[arg]);
             exit(-1);
         }
-    }        
+    }
+
+    num_active_mutex = initial_mutex_constant;
+    pthread_mutex_init(&num_active_mutex, NULL);
 
     readers = malloc(sizeof(readers[0])*NUM_READERS);
     writers = malloc(sizeof(writers[0])*NUM_WRITERS);
@@ -251,9 +288,26 @@ int main(int argc, char * argv[])
         }
     }
 
-    while(1)
+    if (timeout < 0)
     {
-        sleep(1);
+        while(1)
+        {
+            sleep(1);
+        }
+    }
+    else
+    {
+        int local_num_active = 1;
+        sleep(timeout);
+        stop = 1;
+        
+        while (local_num_active)
+        {
+            usleep(500);
+            pthread_mutex_lock(&num_active_mutex);
+            local_num_active = num_active_threads;
+            pthread_mutex_unlock(&num_active_mutex);
+        }
     }
     return 0;
 }
