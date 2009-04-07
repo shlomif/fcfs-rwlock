@@ -62,12 +62,12 @@ extern pthread_rwlock_fcfs_t * pthread_rwlock_fcfs_alloc(void);
 /*
  * Wait indefinitely until a read access to the lock is granted.
  * */
-extern void pthread_rwlock_fcfs_gain_read(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS);
+extern int pthread_rwlock_fcfs_gain_read(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS);
 
 /*
  * Wait indefinitely until a write access to the lock is granted.
  * */
-extern void pthread_rwlock_fcfs_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS);
+extern int pthread_rwlock_fcfs_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS);
 
 /*
  * Release a previously gained read or write access

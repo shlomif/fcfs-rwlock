@@ -77,6 +77,7 @@ pthread_rwlock_fcfs_t * pthread_rwlock_fcfs_alloc(void)
 
 static int gain_write_generic(
     pthread_rwlock_fcfs_t * rwlock,
+    int write_for_destroy,
     int wait_for_access,
     int is_timed,
     const struct timespec * abstime,
@@ -84,6 +85,15 @@ static int gain_write_generic(
     void * context
     )
 {
+    /* If the rwlock is going to be destroyed - exit now. 
+     * An exception is if we are gaining write access to clear up all
+     * existing threads.
+     * */
+    if (rwlock->is_destroyed && !write_for_destroy)
+    {
+        return -1;
+    }
+
     /* If there aren't any readers or writers in the queue we
      * can gain access immidiately */
     if (rwlock->is_writer || (rwlock->num_readers > 0))
@@ -184,17 +194,38 @@ static int gain_write_generic(
 }
 
 
-void pthread_rwlock_fcfs_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS)
+int pthread_rwlock_fcfs_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS)
 {
+    int ret;
+
     pthread_mutex_lock(&(rwlock->mutex));
 
     my_debug_print(rwlock, id, "Want Lock!");
 
-    gain_write_generic(rwlock, 1, 0, NULL, NULL, NULL);
+    ret = gain_write_generic(rwlock, 0, 1, 0, NULL, NULL, NULL);
 
     my_debug_print(rwlock, id, "Lock!");
 
     pthread_mutex_unlock(&(rwlock->mutex));
+
+    return ret;
+}
+
+static int gain_write_for_destroy(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS)
+{
+    int ret;
+
+    pthread_mutex_lock(&(rwlock->mutex));
+
+    my_debug_print(rwlock, id, "Want Lock!");
+
+    ret = gain_write_generic(rwlock, 1, 1, 0, NULL, NULL, NULL);
+
+    my_debug_print(rwlock, id, "Lock!");
+
+    pthread_mutex_unlock(&(rwlock->mutex));
+
+    return ret;
 }
 
 int pthread_rwlock_fcfs_try_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS)
@@ -205,7 +236,7 @@ int pthread_rwlock_fcfs_try_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RW
 
     my_debug_print(rwlock, id, "Want Try Lock!");
 
-    ret = gain_write_generic(rwlock, 0, 0, NULL, NULL, NULL);
+    ret = gain_write_generic(rwlock, 0, 0, 0, NULL, NULL, NULL);
 
     my_debug_print(rwlock, id, ((ret == 0)? "Lock!" : "Failed Lock!"));
 
@@ -365,7 +396,7 @@ int
 
     my_debug_print(rwlock, id, "Want Timed Lock!");
 
-    ret = gain_write_generic(rwlock, 1, 1, abstime, continue_callback, context);
+    ret = gain_write_generic(rwlock, 0, 1, 1, abstime, continue_callback, context);
 
     my_debug_print(rwlock, id, ((ret == 0)?"Lock!": "Failed Lock!"));
 
@@ -384,6 +415,11 @@ static int gain_read_generic(
     void * context
     )
 {
+    /* If the rwlock is going to be destroyed - exit now. */
+    if (rwlock->is_destroyed)
+    {
+        return -1;
+    }
     /*
      * It is possible that there are some disabled items clogging the
      * queue, which will prevent this thread from being accepted immidiately.
@@ -512,17 +548,21 @@ int pthread_rwlock_fcfs_timed_gain_read(
     return ret;
 }
 
-void pthread_rwlock_fcfs_gain_read(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS)
+int pthread_rwlock_fcfs_gain_read(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS)
 {
+    int ret;
+
     pthread_mutex_lock(&(rwlock->mutex));
 
     my_debug_print(rwlock, id, "Want Lock!");
 
-    gain_read_generic(rwlock, 1, 0, NULL, NULL, NULL);
+    ret = gain_read_generic(rwlock, 1, 0, NULL, NULL, NULL);
 
     my_debug_print(rwlock, id, "Lock!");
 
     pthread_mutex_unlock(&(rwlock->mutex));
+
+    return ret;
 }
 
 int pthread_rwlock_fcfs_try_gain_read(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS)
@@ -551,7 +591,7 @@ extern void pthread_rwlock_fcfs_destroy(pthread_rwlock_fcfs_t * rwlock)
     rwlock->is_destroyed = 1;
 
     /* Make sure all running threads are cleared up. */
-    pthread_rwlock_fcfs_gain_write(rwlock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
+    gain_write_for_destroy(rwlock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
 
     pthread_rwlock_fcfs_release(rwlock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
 

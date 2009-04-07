@@ -17,13 +17,13 @@ B<#include E<lt>pthread/rwlock_fcfs.hE<gt>>
 
 B<pthread_rwlock_fcfs_t> * I<rwlock> = B<pthread_rwlock_fcfs_alloc>();
 
-B<void> B<pthread_rwlock_fcfs_gain_read>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+B<int> B<pthread_rwlock_fcfs_gain_read>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
 
-B<void> B<pthread_rwlock_fcfs_gain_write>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+B<int> B<pthread_rwlock_fcfs_gain_write>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
 
-B<void> B<pthread_rwlock_fcfs_try_gain_read>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+B<int> B<pthread_rwlock_fcfs_try_gain_read>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
 
-B<void> B<pthread_rwlock_fcfs_try_gain_write>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
+B<int> B<pthread_rwlock_fcfs_try_gain_write>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
 
 B<int> B<pthread_rwlock_fcfs_timed_gain_read>(B<pthread_rwlock_fcfs_t> * I<rwlock>, B<const struct timespec> * I<abstime>, B<int> (*I<continue_callback>)(B<void> * context), B<void> * I<context>);
 
@@ -45,11 +45,13 @@ than one thread can use the lock simultaneously.
 
 B<pthread_rwlock_fcfs_gain_read> and B<pthread_rwlock_fcfs_gain_write> can be
 used to gain read or write access for I<rwlock>. They block indefinitely until
-the access is granted.
+the access is granted. They return 0 on success or -1 if the lock is
+going to be destroyed and should no longer be accessed.
 
 B<pthread_rwlock_fcfs_try_gain_read> and B<pthread_rwlock_fcfs_try_gain_write>
 attempt to gain a read or write permission and if they do not succeed they 
-exit immediately. They return 0 upon success and non-zero otherwise.
+exit immediately. They return 0 upon success, -1 if the lock is going
+to be destroyed, and non-zero otherwise.
 
 B<pthread_rwlock_fcfs_timed_gain_read> and B<pthread_rwlock_fcfs_timed_gain_write> 
 attempt to gain a permission while initially waiting until I<abstime>. If by 
@@ -64,7 +66,8 @@ If I<continue_callback> is set to NULL, then it will be ignored, and the
 function will terminate once the initial wait is over. 
 
 B<pthread_rwlock_fcfs_timed_gain_read> and B<pthread_rwlock_fcfs_timed_gain_write> 
-return 0 upon success and 1 if they failed to gain a read or write permission.
+return 0 upon success, 1 if they failed to gain a read or write permission
+and -1 if the lock is going to be destroyed.
 
 B<pthread_rwlock_fcfs_release> releases a previously granted 
 read or write permission.
@@ -79,8 +82,8 @@ from a signal handler.
 
 =head1 RETURN VALUE
 
-All condition variable functions return 0 on success and a non-zero error
-code on error.
+All the rwlock functions return 0 on success, -1 if the rwlock is going
+to be destroyed, and a non-zero error code on error.
 
 =head1 AUTHOR
 
