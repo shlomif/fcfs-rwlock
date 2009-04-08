@@ -1,4 +1,5 @@
-Shlomi Fish - wrote most of the code.
+Shlomi Fish ( http://www.shlomifish.org/ ) - wrote most of the code.
 
-Eric D Crahen - Inspired me to implement Run-Length Encoding for the Lock.
+Eric D Crahen (of http://zthread.sourceforge.net/ )- Inspired me to implement 
+Run-Length Encoding for the lock.
 
