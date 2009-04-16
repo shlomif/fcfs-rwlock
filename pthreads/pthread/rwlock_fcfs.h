@@ -1,6 +1,10 @@
 #ifndef __PTHREAD_RWLOCK_FCFS_H
 #define __PTHREAD_RWLOCK_FCFS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <pthread.h>
 
 #include <pthread/rwlock_fcfs_queue.h>
@@ -131,7 +135,8 @@ extern int pthread_rwlock_fcfs_try_gain_read(pthread_rwlock_fcfs_t * rwlock PTHR
  * */
 extern int pthread_rwlock_fcfs_try_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* #ifndef __PTHREAD_RWLOCK_FCFS_H */
-
-
