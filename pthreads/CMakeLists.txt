@@ -61,7 +61,7 @@ ENDIF(WIN32 AND NOT UNIX)
 
 ### This is to set the RPATH correctly, so when installed under a prefix
 ### the executables will find the libraries.
-### 
+###
 ### See:
 ###
 ### http://www.cmake.org/Wiki/CMake_RPATH_handling
@@ -73,7 +73,7 @@ SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
 
 # when building, don't use the install RPATH already
 # (but later on when installing)
-SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE) 
+SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 
 # the RPATH to be used when installing
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
@@ -149,7 +149,7 @@ INSTALL(
 )
 
 IF (WIN32 AND NOT UNIX)
-    # This is so on Windows, the .dll's will be installed in the bin/ 
+    # This is so on Windows, the .dll's will be installed in the bin/
     # directory as well where the Freecell Solver command-line utilities
     # will be able to find them.
 
