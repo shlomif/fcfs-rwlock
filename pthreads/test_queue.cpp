@@ -11,10 +11,10 @@
 
 int main()
 {
-    pthread_rwlock_fcfs_queue_t * queue; 
-    
+    pthread_rwlock_fcfs_queue_t * queue;
+
     queue = pthread_rwlock_fcfs_queue_alloc();
-    
+
     int element;
     int * ptr;
 
@@ -42,7 +42,7 @@ int main()
             {
                 cout << "DeQed " << *ptr << "\n";
                 free(ptr);
-            }            
+            }
         }
         else if (op == 'p')
         {
@@ -54,7 +54,7 @@ int main()
             else
             {
                 cout << "Polled " << *ptr << "\n";
-            }            
+            }
         }
     }
 
