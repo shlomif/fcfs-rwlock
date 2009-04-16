@@ -51,5 +51,5 @@ extern void * pthread_rwlock_fcfs_queue_peak_tail(pthread_rwlock_fcfs_queue_t * 
 }
 #endif
 
-#endif /* #ifndef __PTHREAD_RWLOCK_FCFS_QUEUE_H */ 
+#endif /* #ifndef __PTHREAD_RWLOCK_FCFS_QUEUE_H */
 

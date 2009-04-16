@@ -6,7 +6,7 @@
 #include <pthread/rwlock_fcfs_queue.h>
 
 /* This is the struct that is pointed to by the elements of the queue of
- * the FCFS RWLock 
+ * the FCFS RWLock
  * */
 struct pthread_rwlock_fcfs_item_struct
 {
@@ -50,11 +50,11 @@ typedef struct pthread_rwlock_fcfs_struct pthread_rwlock_fcfs_t;
 #define PTHREAD_RWLOCK_FCFS_DEBUG_ARGS , char * id
 #define PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS , id
 #else
-#define PTHREAD_RWLOCK_FCFS_DEBUG_ARGS 
-#define PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS 
+#define PTHREAD_RWLOCK_FCFS_DEBUG_ARGS
+#define PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS
 #endif
 
-/* 
+/*
  * Allocate a new FCFS RWLock
  * */
 extern pthread_rwlock_fcfs_t * pthread_rwlock_fcfs_alloc(void);
@@ -74,20 +74,20 @@ extern int pthread_rwlock_fcfs_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD
  * */
 extern void pthread_rwlock_fcfs_release(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS);
 
-/* 
+/*
  * Destroy the RWLock
  * */
 extern void pthread_rwlock_fcfs_destroy(pthread_rwlock_fcfs_t * rwlock);
 
 /*
- * Wait until a certain time (abstime) to get a read access. If it is 
- * not given, continue_callback is called and asks whether to continue 
- * or not. 
- * 
+ * Wait until a certain time (abstime) to get a read access. If it is
+ * not given, continue_callback is called and asks whether to continue
+ * or not.
+ *
  * If it wishes to continue, it is responsible for setting the new abstime.
  *
  * context is the context variable for continue_callback
- * 
+ *
  * */
 extern int pthread_rwlock_fcfs_timed_gain_read(
         pthread_rwlock_fcfs_t * rwlock,
@@ -98,13 +98,13 @@ extern int pthread_rwlock_fcfs_timed_gain_read(
         );
 
 /*
- * Wait until a certain time (abstime) to get a write access. If it is not 
- * given, continue_callback is called and asks whether to continue or not. 
- * 
+ * Wait until a certain time (abstime) to get a write access. If it is not
+ * given, continue_callback is called and asks whether to continue or not.
+ *
  * If it wishes to continue, it is responsible for setting the new abstime.
  *
  * context is the context variable for continue_callback
- * 
+ *
  * */
 extern int pthread_rwlock_fcfs_timed_gain_write(
         pthread_rwlock_fcfs_t * rwlock,
@@ -114,7 +114,7 @@ extern int pthread_rwlock_fcfs_timed_gain_write(
         PTHREAD_RWLOCK_FCFS_DEBUG_ARGS
         );
 
-/* 
+/*
  * Attempt to gain a read access. If it is not given immidiately it returns an
  * error code other than 0.
  *
@@ -123,7 +123,7 @@ extern int pthread_rwlock_fcfs_timed_gain_write(
 extern int pthread_rwlock_fcfs_try_gain_read(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS);
 
 
-/* 
+/*
  * Attempt to gain a write access. If it is not given immidiately it returns an
  * error code other than 0.
  *
@@ -131,7 +131,7 @@ extern int pthread_rwlock_fcfs_try_gain_read(pthread_rwlock_fcfs_t * rwlock PTHR
  * */
 extern int pthread_rwlock_fcfs_try_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_FCFS_DEBUG_ARGS);
 
-    
+
 #endif /* #ifndef __PTHREAD_RWLOCK_FCFS_H */
 
 
