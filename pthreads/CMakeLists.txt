@@ -144,22 +144,6 @@ ADD_EXECUTABLE (test_rwlock
 TARGET_LINK_LIBRARIES (test_rwlock pthread_rwlock_fcfs)
 
 INSTALL(
-    TARGETS ${FREECELL_SOLVER_LIBS}
-    DESTINATION "lib"
-)
-
-IF (WIN32 AND NOT UNIX)
-    # This is so on Windows, the .dll's will be installed in the bin/
-    # directory as well where the Freecell Solver command-line utilities
-    # will be able to find them.
-
-    INSTALL(
-        TARGETS "freecell-solver"
-        DESTINATION "bin"
-    )
-ENDIF (WIN32 AND NOT UNIX)
-
-INSTALL(
     FILES
         "AUTHORS"
         "COPYING"
@@ -172,8 +156,8 @@ INSTALL(
 
 INSTALL(
     FILES
-        "rwlock_fcfs.h"
-        "rwlock_fcfs_queue.h"
+        "pthread/rwlock_fcfs.h"
+        "pthread/rwlock_fcfs_queue.h"
     DESTINATION
         "include/pthread"
 )
