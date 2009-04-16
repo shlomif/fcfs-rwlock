@@ -85,7 +85,7 @@ static int gain_write_generic(
     void * context
     )
 {
-    /* If the rwlock is going to be destroyed - exit now. 
+    /* If the rwlock is going to be destroyed - exit now.
      * An exception is if we are gaining write access to clear up all
      * existing threads.
      * */
@@ -597,7 +597,7 @@ extern void pthread_rwlock_fcfs_destroy(pthread_rwlock_fcfs_t * rwlock)
 
     /* Now - destroy the lock. */
     pthread_rwlock_fcfs_queue_destroy(rwlock->queue);
-    
+
     free(rwlock);
 
     return;

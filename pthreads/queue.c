@@ -1,6 +1,6 @@
 /*
  * queue.c
- * 
+ *
  * This module implements a queue
  *
  * */
@@ -38,13 +38,13 @@ void * pthread_rwlock_fcfs_queue_dequeue(pthread_rwlock_fcfs_queue_t * queue)
 {
     pthread_rwlock_fcfs_queue_item_t * ret;
     void * void_ret;
-    
+
     /* If there are no messages present in the queue */
     if (queue->head == NULL)
     {
         return NULL;
     }
-    
+
     /* Retrieve the first element */
     ret = queue->head;
     /* Remove it from the list */
@@ -59,7 +59,7 @@ void * pthread_rwlock_fcfs_queue_dequeue(pthread_rwlock_fcfs_queue_t * queue)
 
     void_ret = ret->data;
     free(ret);
-    
+
     return void_ret;
 }
 
@@ -67,18 +67,18 @@ void * pthread_rwlock_fcfs_queue_peak(pthread_rwlock_fcfs_queue_t * queue)
 {
     pthread_rwlock_fcfs_queue_item_t * ret;
     void * void_ret;
-    
+
     /* If there are no messages present in the queue */
     if (queue->head == NULL)
     {
         return NULL;
     }
-    
+
     /* Retrieve the first element */
     ret = queue->head;
 
     void_ret = ret->data;
-    
+
     return void_ret;
 }
 
@@ -92,7 +92,7 @@ void pthread_rwlock_fcfs_queue_enqueue(pthread_rwlock_fcfs_queue_t * queue, void
     msg_with_next->data = msg;
 
     if (queue->tail == NULL)
-    {                
+    {
         queue->head = queue->tail = msg_with_next;
         msg_with_next->next = NULL;
     }
@@ -118,18 +118,18 @@ void * pthread_rwlock_fcfs_queue_peak_tail(pthread_rwlock_fcfs_queue_t * queue)
 {
     pthread_rwlock_fcfs_queue_item_t * ret;
     void * void_ret;
-    
+
     /* If there are no messages present in the queue */
     if (queue->tail == NULL)
     {
         return NULL;
     }
-    
+
     /* Retrieve the first element */
     ret = queue->tail;
 
     void_ret = ret->data;
-    
+
     return void_ret;
 }
 

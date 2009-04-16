@@ -8,7 +8,7 @@
 
 #include <pthread/rwlock_fcfs.h>
 
-static const pthread_mutex_t initial_mutex_constant = 
+static const pthread_mutex_t initial_mutex_constant =
     PTHREAD_MUTEX_INITIALIZER
     ;
 
@@ -59,7 +59,7 @@ void * reader_thread(void * void_context)
             struct timespec timeout;
             struct timezone tz;
             int ret;
-            
+
             gettimeofday(&now, &tz);
             timeout.tv_nsec = (now.tv_usec + (rand()%1000000));
             if (timeout.tv_nsec > 1000000)
@@ -67,7 +67,7 @@ void * reader_thread(void * void_context)
                 timeout.tv_sec += timeout.tv_nsec / 1000000;
                 timeout.tv_nsec %= 1000000;
             }
-            
+
             timeout.tv_nsec *= 1000;
             ret = pthread_rwlock_fcfs_timed_gain_read(
                 mylock,
@@ -82,7 +82,7 @@ void * reader_thread(void * void_context)
             if (ret == 0)
             {
                 pthread_rwlock_fcfs_release(mylock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
-            } 
+            }
 
             usleep(rand()%1000000);
             fflush(stdout);
@@ -92,7 +92,7 @@ void * reader_thread(void * void_context)
             int ret;
             ret = pthread_rwlock_fcfs_try_gain_read(mylock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
 
-            usleep(rand()%1000000);            
+            usleep(rand()%1000000);
 
             if (ret == 0)
             {
@@ -106,7 +106,7 @@ void * reader_thread(void * void_context)
 
     pthread_mutex_lock(&num_active_mutex);
     num_active_threads--;
-    pthread_mutex_unlock(&num_active_mutex);  
+    pthread_mutex_unlock(&num_active_mutex);
 
     return NULL;
 }
@@ -145,7 +145,7 @@ void * writer_thread(void * void_context)
             struct timespec timeout;
             struct timezone tz;
             int ret;
-            
+
             gettimeofday(&now, &tz);
             timeout.tv_nsec = (now.tv_usec + (rand()%1000000));
             if (timeout.tv_nsec > 1000000)
@@ -153,7 +153,7 @@ void * writer_thread(void * void_context)
                 timeout.tv_sec += timeout.tv_nsec / 1000000;
                 timeout.tv_nsec %= 1000000;
             }
-            
+
             timeout.tv_nsec *= 1000;
             ret = pthread_rwlock_fcfs_timed_gain_write(
                 mylock,
@@ -168,7 +168,7 @@ void * writer_thread(void * void_context)
             if (ret == 0)
             {
                 pthread_rwlock_fcfs_release(mylock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
-            } 
+            }
 
             usleep(rand()%1000000);
             fflush(stdout);
@@ -178,7 +178,7 @@ void * writer_thread(void * void_context)
             int ret;
             ret = pthread_rwlock_fcfs_try_gain_write(mylock PTHREAD_RWLOCK_FCFS_DEBUG_CALL_ARGS);
 
-            usleep(rand()%1000000);            
+            usleep(rand()%1000000);
 
             if (ret == 0)
             {
@@ -192,7 +192,7 @@ void * writer_thread(void * void_context)
 
     pthread_mutex_lock(&num_active_mutex);
     num_active_threads--;
-    pthread_mutex_unlock(&num_active_mutex);  
+    pthread_mutex_unlock(&num_active_mutex);
 
     return NULL;
 }
@@ -266,7 +266,7 @@ int main(int argc, char * argv[])
             reader_thread,
             context
             );
-        
+
         if (check != 0)
         {
             fprintf(stderr, "Could not create Reader #%i!\n", a);
@@ -284,7 +284,7 @@ int main(int argc, char * argv[])
             writer_thread,
             context
             );
-        
+
         if (check != 0)
         {
             fprintf(stderr, "Could not create Writer #%i!\n", a);
@@ -304,7 +304,7 @@ int main(int argc, char * argv[])
         int local_num_active = 1;
         sleep(timeout);
         stop = 1;
-        
+
         while (local_num_active)
         {
             usleep(500);
@@ -324,7 +324,7 @@ int main(int argc, char * argv[])
     {
         pthread_join(writers[a], NULL);
     }
-    
+
 
     free(readers);
     free(writers);
