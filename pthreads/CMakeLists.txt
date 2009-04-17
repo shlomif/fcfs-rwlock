@@ -36,10 +36,14 @@ SET(CPACK_SOURCE_IGNORE_FILES
     "/CMakeCache.txt$"
     "/Makefile$"
     "/CTestTestfile.cmake$"
+    "/cmake_install.cmake$"
     "/CPackConfig.cmake$"
+    "/CPackSourceConfig.cmake$"
     "/tags$"
     "/config\\\\.h$"
     "/Testing/"
+    "/test_rwlock$"
+    "/test_rwlock_2$"
 )
 
 IF(WIN32 AND NOT UNIX)
