@@ -39,6 +39,7 @@ SET(CPACK_SOURCE_IGNORE_FILES
     "/CPackConfig.cmake$"
     "/tags$"
     "/config\\\\.h$"
+    "/Testing/"
 )
 
 IF(WIN32 AND NOT UNIX)
