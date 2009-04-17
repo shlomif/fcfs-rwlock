@@ -237,7 +237,7 @@ int main(int argc, char * argv[])
             arg++;
             if (arg == argc)
             {
-                fprintf(stderr, "--num-writers accepts an argument!\n");
+                fprintf(stderr, "--timeout accepts an argument!\n");
                 exit(-1);
             }
             timeout = atoi(argv[arg]);

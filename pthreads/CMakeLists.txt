@@ -143,6 +143,12 @@ ADD_EXECUTABLE (test_rwlock
 
 TARGET_LINK_LIBRARIES (test_rwlock pthread_rwlock_fcfs)
 
+ADD_EXECUTABLE (test_rwlock_2
+    test_rwlock_2.c
+)
+
+TARGET_LINK_LIBRARIES (test_rwlock_2 pthread_rwlock_fcfs)
+
 INSTALL(
     FILES
         "AUTHORS"
@@ -167,4 +173,9 @@ ENABLE_TESTING()
 ADD_TEST(
     runtime
     ./test_rwlock --timeout 5
+)
+
+ADD_TEST(
+    runtime2
+    ./test_rwlock_2 --timeout 5
 )

@@ -20,7 +20,7 @@ struct pthread_rwlock_fcfs_item_struct
     int is_writer;
     /* A flag that disables this item */
     int is_disabled;
-    /* An integer specifiying how many threads are waiting on it */
+    /* An integer specifying how many threads are waiting on it */
     int num_threads;
     /* A flag that indicates if the first thread in the pack has already
      * been accepted. (Used only for a writers' pack */
@@ -29,6 +29,13 @@ struct pthread_rwlock_fcfs_item_struct
 
 typedef struct pthread_rwlock_fcfs_item_struct pthread_rwlock_fcfs_item_t;
 
+enum pthread_rwlock_fcfs_status
+{
+    PTHREAD_RWLOCK_FCFS_UNLOCKED,
+    PTHREAD_RWLOCK_FCFS_USED_BY_READERS,
+    PTHREAD_RWLOCK_FCFS_USED_BY_A_WRITER,
+};
+
 /* The RWLock Struct */
 struct pthread_rwlock_fcfs_struct
 {
@@ -36,8 +43,12 @@ struct pthread_rwlock_fcfs_struct
     pthread_rwlock_fcfs_queue_t * queue;
     /* The number of readers that are using the RWLock at the moment */
     int num_readers;
-    /* Specifies if there is a writer locking the RWLock */
-    int is_writer;
+    /* The number of pending readers that didn't gain access 
+     * to the lock yet. */
+    int num_pending_readers;
+    /* Specifies if there is a writer locking the RWLock, some
+     * readers or if it's un-occupied. */
+    enum pthread_rwlock_fcfs_status status;
     /* A mutex to make sure no two threads _modify_ the RWLock struct
      * at the moment */
     pthread_mutex_t mutex;
