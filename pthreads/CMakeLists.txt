@@ -106,6 +106,9 @@ IF (${DEBUG})
     ADD_DEFINITIONS("-DPTHREAD_RWLOCK_FCFS_DEBUG=1")
 ENDIF (${DEBUG})
 
+# So it can find the header files under pthread because we use
+# #include with angle brackets (<...>).
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_SOURCE_DIR})
 # So it can find config.h
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
 
