@@ -1,4 +1,4 @@
-INCLUDE( "${CMAKE_CURRENT_SOURCE_DIR}/Common.cmake" )
+INCLUDE(Shlomif_Common)
 
 SET(DEBUG "" CACHE BOOL "Add debugging information")
 # This is the equivalent to perform a "make dist"/"make distdir" etc.
