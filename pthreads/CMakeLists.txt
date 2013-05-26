@@ -1,4 +1,8 @@
+SET (private_mod_path "${CMAKE_SOURCE_DIR}/cmake")
+LIST (APPEND CMAKE_MODULE_PATH "${private_mod_path}")
 INCLUDE(Shlomif_Common)
+
+SHLOMIF_COMMON_SETUP("${private_mod_path}")
 
 SET(DEBUG "" CACHE BOOL "Add debugging information")
 # This is the equivalent to perform a "make dist"/"make distdir" etc.

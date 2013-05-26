@@ -2,8 +2,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
+SET (PTHREAD_RWLOCK_FCFS_MAN_PAGE_DESTS )
 RUN_POD2MAN(
-    "${CMAKE_CURRENT_SOURCE_DIR}/pthread_rwlock_fcfs.pod"
+    PTHREAD_RWLOCK_FCFS_MAN_PAGE_DESTS
+    "pthread_rwlock_fcfs.pod"
     "pthread_rwlock_fcfs.3thr"
     "3thr"
     "FCFS RWLock"
@@ -43,11 +45,11 @@ FOREACH(link ${man_links})
         COMMAND echo
         ARGS ".so man3/${prefix}.3thr" > ${DEST}
         VERBATIM
-    )    
+    )
 
     ADD_CUSTOM_TARGET(
         MAN_${DEST} ALL
-        DEPENDS ${DEST}
-    )   
+        DEPENDS ${DEST} ${PTHREAD_RWLOCK_FCFS_MAN_PAGE_DESTS}
+    )
 ENDFOREACH(link)
 

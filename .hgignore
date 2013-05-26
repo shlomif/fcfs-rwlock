@@ -1,1 +1,2 @@
 pthreads/build
+pthreads/cmake/Shlomif_Common.cmake
