@@ -87,7 +87,7 @@ to be destroyed, and a non-zero error code on error.
 
 =head1 AUTHOR
 
-Shlomi Fish E<lt>shlomif@vipe.technion.ac.ilE<gt>.
+Shlomi Fish E<lt>shlomif@shlomifish.orgE<gt>.
 
 =head1 EXAMPLE
 
