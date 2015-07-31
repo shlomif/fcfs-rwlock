@@ -43,7 +43,7 @@ struct pthread_rwlock_fcfs_struct
     pthread_rwlock_fcfs_queue_t * queue;
     /* The number of readers that are using the RWLock at the moment */
     int num_readers;
-    /* The number of pending readers that didn't gain access 
+    /* The number of pending readers that didn't gain access
      * to the lock yet. */
     int num_pending_readers;
     /* Specifies if there is a writer locking the RWLock, some

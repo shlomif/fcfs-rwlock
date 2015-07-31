@@ -244,7 +244,7 @@ int pthread_rwlock_fcfs_try_gain_write(pthread_rwlock_fcfs_t * rwlock PTHREAD_RW
 
     ret = gain_write_generic(rwlock, 0, 0, 0, NULL, NULL, NULL);
 
-    my_debug_print(rwlock, id, 
+    my_debug_print(rwlock, id,
             ((ret == 0)
              ? "Gained Tried Write Lock!"
              : "Failed Tried Write Lock!")
@@ -297,7 +297,7 @@ static void accept_pending_items(pthread_rwlock_fcfs_t * rwlock PTHREAD_RWLOCK_F
 
     extract_first_non_disabled_item();
 
-    my_debug_print(rwlock, id, 
+    my_debug_print(rwlock, id,
             (item
              ? "accept_pending - Valid item"
              : "accept_pending - Null Item"
@@ -436,7 +436,7 @@ int
 
     ret = gain_write_generic(rwlock, 0, 1, 1, abstime, continue_callback, context);
 
-    my_debug_print(rwlock, id, 
+    my_debug_print(rwlock, id,
             ((ret == 0)
              ? "Gained Timed Write Lock!"
              : "Failed Timed Write Lock!"));
@@ -469,7 +469,7 @@ static int gain_read_generic(
      * */
     remove_junk_from_head_of_queue(rwlock);
 
-    if ((rwlock->status != PTHREAD_RWLOCK_FCFS_USED_BY_A_WRITER) 
+    if ((rwlock->status != PTHREAD_RWLOCK_FCFS_USED_BY_A_WRITER)
             && pthread_rwlock_fcfs_queue_is_empty(rwlock->queue))
     {
         /* Increment the number of readers. */
@@ -584,9 +584,9 @@ int pthread_rwlock_fcfs_timed_gain_read(
 
     ret = gain_read_generic(rwlock, 1, 1, abstime, continue_callback, context);
 
-    my_debug_print(rwlock, id, 
-            ((ret == 0) ? 
-             "Failed Timed Read Lock!" : 
+    my_debug_print(rwlock, id,
+            ((ret == 0) ?
+             "Failed Timed Read Lock!" :
              "Failed Timed Read Lock!"
              )
             );

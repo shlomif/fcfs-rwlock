@@ -2,12 +2,12 @@
 
 =head1 NAME
 
-pthread_rwlock_fcfs_alloc, 
-pthread_rwlock_fcfs_gain_read, pthread_rwlock_gain_write, 
+pthread_rwlock_fcfs_alloc,
+pthread_rwlock_fcfs_gain_read, pthread_rwlock_gain_write,
 pthread_rwlock_fcfs_timed_gain_read, pthread_rwlock_fcfs_timed_gain_write,
 pthread_rwlock_fcfs_try_gain_read, pthread_rwlock_fcfs_try_gain_write,
 pthread_rwlock_fcfs_release,
-pthread_rwlock_fcfs_destroy - operations on a first-come first-served 
+pthread_rwlock_fcfs_destroy - operations on a first-come first-served
 readers/writers lock.
 
 
@@ -35,8 +35,8 @@ B<void> B<pthread_rwlock_fcfs_destroy>(B<pthread_rwlock_fcfs_t> * I<rwlock>);
 
 =head1 DESCRIPTION
 
-A Readers/Writers Lock (or "rwlock" for short) is a mechanism that allows an 
-arbitrary number of readers, or alternatively one and only one writer to 
+A Readers/Writers Lock (or "rwlock" for short) is a mechanism that allows an
+arbitrary number of readers, or alternatively one and only one writer to
 access a resource at a given time. A First-Come First-Served RWLock makes sure
 every pending thread will get its turn eventually.
 
@@ -49,27 +49,27 @@ the access is granted. They return 0 on success or -1 if the lock is
 going to be destroyed and should no longer be accessed.
 
 B<pthread_rwlock_fcfs_try_gain_read> and B<pthread_rwlock_fcfs_try_gain_write>
-attempt to gain a read or write permission and if they do not succeed they 
+attempt to gain a read or write permission and if they do not succeed they
 exit immediately. They return 0 upon success, -1 if the lock is going
 to be destroyed, and non-zero otherwise.
 
-B<pthread_rwlock_fcfs_timed_gain_read> and B<pthread_rwlock_fcfs_timed_gain_write> 
-attempt to gain a permission while initially waiting until I<abstime>. If by 
-that time access is not granted, then I<continue_callback> will be called to 
+B<pthread_rwlock_fcfs_timed_gain_read> and B<pthread_rwlock_fcfs_timed_gain_write>
+attempt to gain a permission while initially waiting until I<abstime>. If by
+that time access is not granted, then I<continue_callback> will be called to
 find out if the functions should continue waiting.
 
 I<continue_callback> is responsible for setting a new value for I<abstime> and
-should return 1 if it wishes to continue wait for a permission or 0 otherwise. 
+should return 1 if it wishes to continue wait for a permission or 0 otherwise.
 I<callback_context> is the argument which it receives as an argument.
 
-If I<continue_callback> is set to NULL, then it will be ignored, and the 
-function will terminate once the initial wait is over. 
+If I<continue_callback> is set to NULL, then it will be ignored, and the
+function will terminate once the initial wait is over.
 
-B<pthread_rwlock_fcfs_timed_gain_read> and B<pthread_rwlock_fcfs_timed_gain_write> 
+B<pthread_rwlock_fcfs_timed_gain_read> and B<pthread_rwlock_fcfs_timed_gain_write>
 return 0 upon success, 1 if they failed to gain a read or write permission
 and -1 if the lock is going to be destroyed.
 
-B<pthread_rwlock_fcfs_release> releases a previously granted 
+B<pthread_rwlock_fcfs_release> releases a previously granted
 read or write permission.
 
 B<pthread_rwlock_fcfs_destroy> can be used to destroy a previously allocated

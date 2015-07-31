@@ -47,7 +47,7 @@ void * thread_work(void* attr)
     return NULL;
 }
 
-int main(int argc, char * argv[]) 
+int main(int argc, char * argv[])
 {
     pthread_t threads[MAX_THREAD];
     int rc;

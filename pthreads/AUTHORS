@@ -1,6 +1,6 @@
 Shlomi Fish ( http://www.shlomifish.org/ ) - wrote most of the code.
 
-Eric D Crahen (of http://zthread.sourceforge.net/ ) - Inspired me to implement 
+Eric D Crahen (of http://zthread.sourceforge.net/ ) - Inspired me to implement
 Run-Length Encoding for the lock.
 
 Luo Lei - pointed out that pthread_rwlock_fcfs_destroy() was not implemented

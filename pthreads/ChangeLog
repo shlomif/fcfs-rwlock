@@ -292,7 +292,7 @@ From 0.3.0 to 0.3.1:
 
 * Printed the state of the queue and the rwlock.
 
-* Added another extract_first_non_disabled_item() at the end of 
+* Added another extract_first_non_disabled_item() at the end of
 accept_pending_items().
 
 * The RWLock seems to work OK according to the dumps.
