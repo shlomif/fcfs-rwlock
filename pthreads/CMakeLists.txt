@@ -1,7 +1,4 @@
-SET (private_mod_path "${CMAKE_SOURCE_DIR}/cmake")
-LIST (APPEND CMAKE_MODULE_PATH "${private_mod_path}")
-INCLUDE(Shlomif_Common)
-
+INCLUDE ("${CMAKE_SOURCE_DIR}/cmake/shlomif_common_bootstrap.cmake")
 SHLOMIF_COMMON_SETUP("${private_mod_path}")
 
 SET(DEBUG "" CACHE BOOL "Add debugging information")
@@ -58,7 +55,7 @@ IF(WIN32 AND NOT UNIX)
     SET(CPACK_NSIS_HELP_LINK "http:\\\\\\\\fc-solve.berlios.de")
     SET(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\fc-solve.berlios.de")
     SET(CPACK_NSIS_DISPLAY_NAME "Freecell Solver")
-    SET(CPACK_NSIS_CONTACT "shlomif@iglu.org.il")
+    SET(CPACK_NSIS_CONTACT "shlomif@cpan.org")
     SET(CPACK_NSIS_MODIFY_PATH ON)
     # Setting for NSIS :
     SET(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\fc-solve.ico")
